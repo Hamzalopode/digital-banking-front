@@ -1,25 +1,38 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Customer} from "../model/customer.model";
-import {environment} from "../../environments/environment";
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Customer } from '../models/Customer';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-  constructor(private http:HttpClient) { }
 
-  public getCustomers():Observable<Array<Customer>>{
-    return this.http.get<Array<Customer>>(environment.backendHost+"/customers")
+  constructor(private http: HttpClient) { }
+
+  public getCustomers() : Observable<Array<Customer>>{
+    return this.http.get<Array<Customer>>(environment.url+"customers")
   }
-  public searchCustomers(keyword : string):Observable<Array<Customer>>{
-    return this.http.get<Array<Customer>>(environment.backendHost+"/customers/search?keyword="+keyword)
+
+  public getCustomer(customerId : string) : Observable<Customer>{
+    return this.http.get<Customer>(environment.url+"customers/" + customerId)
   }
-  public saveCustomer(customer: Customer):Observable<Customer>{
-    return this.http.post<Customer>(environment.backendHost+"/customers",customer);
+
+  public searchCustomers(kw : string) : Observable<Array<Customer>>{
+    return this.http.get<Array<Customer>>(environment.url+"customers/search?keyword="+kw)
   }
-  public deleteCustomer(id: number){
-    return this.http.delete(environment.backendHost+"/customers/"+id);
+
+  public saveCustomer(customer : Customer) : Observable<Customer>{
+    return this.http.post<Customer>(environment.url+"customers", customer)
+  }
+
+  public deleteCustomer(id : number){
+    return this.http.delete(environment.url+"customers/"+id)
+  }
+
+  public updateCustomer(customer : Customer) : Observable<Customer>{
+    return this.http.put<Customer>(environment.url+"customers/" + customer.id, customer)
   }
 }

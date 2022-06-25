@@ -1,0 +1,8 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+  nav {
+    background: #7d7d7d;
+  background: linear-gradient(to right, #7d7d7d, #7d7d7d);
+  }
